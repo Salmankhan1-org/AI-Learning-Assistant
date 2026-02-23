@@ -8,47 +8,47 @@ The platform also provides powerful admin analytics to monitor user growth, docu
 ## Features
 **User Features**
 
-📄 Upload learning documents (PDF, notes, etc.)
-🧠 Auto-generate:
+```Upload learning documents (PDF, notes, etc.)
+   Auto-generate:
    AI-powered Quizzes
    AI-powered Flashcards
-📊 Track quiz performance over months
-📅 View learning progress analytics
-📚 Manage uploaded documents
-🔎 Search and organize content
-🔐 Secure authentication with role-based access
-📱 Responsive dashboard (mobile + desktop)
+   Track quiz performance over months
+   View learning progress analytics
+   Manage uploaded documents
+   Search and organize content
+   Secure authentication with role-based access
+   Responsive dashboard (mobile + desktop)```
 
 **Admin Features**
 
-👥 Track number of users per month
-📄 Track number of documents uploaded per month
-📈 Visual analytics dashboards (Line / Doughnut charts)
-🗂 View all documents in tabular format
-🗑 Delete users or documents
-🔎 Search users by name & email
-📊 System growth monitoring
+   ```Track number of users per month
+   Track number of documents uploaded per month
+   Visual analytics dashboards (Line / Doughnut charts)
+   View all documents in tabular format
+   Delete users or documents
+   Search users by name & email
+   System growth monitoring```
 
 ## Tech Stack
  **Frontend**
-   React.js
+   ```React.js
    Redux Toolkit
    Tailwind CSS
    React Router
    Chart.js / Recharts
    Axios
-   React Toastify
+   React Toastify```
  **Backend**
-   Node.js
+   ```Node.js
    Express.js
    MongoDB
    Mongoose
    JWT Authentication
-   Role-Based Authorization
+   Role-Based Authorization```
  **AI Integration**
-   context based search
+   ```context based search
    AI quiz & flashcard generation
-   Document content processing
+   Document content processing```
 
 ## Installation Instructions
 1. **Clone the repository:**  
