@@ -1,7 +1,54 @@
-# AI Learning Assistant
+## MentorMind Pvt Ltd
+**AI-Powered Learning Assistant Platform**
 
-## Overview
-The AI Learning Assistant is a MERN stack project aimed at enhancing the learning experience through artificial intelligence. This application allows users to access various educational resources, interact with AI tutors, and track their progress in learning.
+MentorMind is a full-stack AI-driven learning platform that allows users to upload documents, automatically generate quizzes and flashcards, and track their learning progress over time.
+
+The platform also provides powerful admin analytics to monitor user growth, document uploads, and overall engagement metrics.
+
+## Features
+**User Features**
+
+📄 Upload learning documents (PDF, notes, etc.)
+🧠 Auto-generate:
+   AI-powered Quizzes
+   AI-powered Flashcards
+📊 Track quiz performance over months
+📅 View learning progress analytics
+📚 Manage uploaded documents
+🔎 Search and organize content
+🔐 Secure authentication with role-based access
+📱 Responsive dashboard (mobile + desktop)
+
+**Admin Features**
+
+👥 Track number of users per month
+📄 Track number of documents uploaded per month
+📈 Visual analytics dashboards (Line / Doughnut charts)
+🗂 View all documents in tabular format
+🗑 Delete users or documents
+🔎 Search users by name & email
+📊 System growth monitoring
+
+## Tech Stack
+ **Frontend**
+   React.js
+   Redux Toolkit
+   Tailwind CSS
+   React Router
+   Chart.js / Recharts
+   Axios
+   React Toastify
+ **Backend**
+   Node.js
+   Express.js
+   MongoDB
+   Mongoose
+   JWT Authentication
+   Role-Based Authorization
+ **AI Integration**
+   context based search
+   AI quiz & flashcard generation
+   Document content processing
 
 ## Installation Instructions
 1. **Clone the repository:**  
@@ -41,28 +88,7 @@ AI-Learning-Assistant/
 └── README.md             # Project documentation
 ```
 
-## API Documentation
-### Authentication
-- **POST** `/api/auth/register`  
-  Creates a new user account.
-  - Request Body: `{ "username": "your_username", "password": "your_password" }`
 
-- **POST** `/api/auth/login`  
-  Logs in a user and returns a JWT token.
-  - Request Body: `{ "username": "your_username", "password": "your_password" }`
-
-### Resources
-- **GET** `/api/resources`  
-  Retrieves a list of educational resources.
-
-- **GET** `/api/resources/:id`  
-  Retrieves details about a specific resource.
-
-## Other Essential Sections
-### Features
-- User authentication and authorization
-- AI tutor interaction
-- Progress tracking
 
 ### Contributing
 1. Fork the repository.
@@ -71,5 +97,4 @@ AI-Learning-Assistant/
 4. Push to the branch (`git push origin feature/YourFeature`).
 5. Create a new Pull Request.
 
-### License
-This project is licensed under the MIT License.
+
