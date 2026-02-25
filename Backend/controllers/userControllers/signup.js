@@ -1,6 +1,6 @@
 const User = require("../../models/userModel");
 const bcrypt = require("bcryptjs");
-const {  generateAccessToken, generateRefreshToken, generateToken } = require("../../utils/generateToken");
+const {  generateAccessToken, generateRefreshToken, generateToken } = require("../../utils/JWT/generateToken");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
 const crypto = require("crypto");

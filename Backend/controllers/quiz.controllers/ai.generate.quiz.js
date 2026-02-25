@@ -3,13 +3,14 @@ const Document = require("../../models/document.schema");
 const Quiz = require("../../models/quiz.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
-const { generateUsingAI } = require("../../utils/gemini.ai");
+const { generateUsingAI } = require("../../utils/AI/gemini.ai");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 exports.generateQuiz = catchAsyncError(
     async(req,res,next)=>{
         const {documentId} = req.params;
         const {questions} = req.body;
-        const userId = req.user._id;
+        const userId = GetUserId(req);
         
         if(!documentId) {
             return next(new ErrorHandler("Please Provide DocumentId", 401));

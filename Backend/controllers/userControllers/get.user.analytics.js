@@ -3,9 +3,10 @@ const FlashCard = require("../../models/flashcard.schema");
 const Quiz = require("../../models/quiz.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const mongoose = require("mongoose");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 exports.getUserAnalytics = catchAsyncError(async (req, res) => {
-  const userId = new mongoose.Types.ObjectId(req.user._id);
+  const userId = new mongoose.Types.ObjectId(GetUserId(req));
 
   /* Quick Analysis Data counts */
 

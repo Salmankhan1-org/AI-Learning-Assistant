@@ -2,13 +2,14 @@ const ActivityLogger = require("../../models/activity.logger.schema");
 const Quiz = require("../../models/quiz.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 
 exports.submitQuiz = catchAsyncError(
     async (req, res,next) => {
         const { quizId } = req.params;
         const { userAnswers } = req.body;
-        const userId = req.user._id;
+        const userId = GetUserId(req);
 
         if(!quizId){
             return next(new ErrorHandler("Please Provide quiz Id",401));

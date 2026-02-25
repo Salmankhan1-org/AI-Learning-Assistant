@@ -3,7 +3,7 @@ const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
 const {
   generateToken
-} = require("../../utils/generateToken");
+} = require("../../utils/JWT/generateToken");
 const { verifyGoogleToken } = require("../../utils/verify.google.token");
 const bcrypt = require("bcryptjs");
 

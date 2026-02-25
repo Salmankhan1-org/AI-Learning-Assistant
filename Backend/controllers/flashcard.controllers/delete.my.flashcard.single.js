@@ -2,11 +2,12 @@ const ActivityLogger = require("../../models/activity.logger.schema");
 const FlashCard = require("../../models/flashcard.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 exports.deleteMySingleFlashcard = catchAsyncError(
     async(req,res,next)=>{
         const {flashcardId} = req.params;
-        const userId = req.user._id;
+        const userId = GetUserId(req);
 
         if(!flashcardId){
             return next(new ErrorHandler("Please Provide Document Id", 401));

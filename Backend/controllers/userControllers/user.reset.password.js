@@ -3,11 +3,14 @@ const { catchAsyncError } = require("../../utils/catchAsyncError");
 const crypto = require("crypto");
 const ErrorHandler = require("../../utils/ErrorHandler");
 const bcrypt = require("bcryptjs");
+const db = require("../../config/connectSqliteDb");
+const { GetAccessToken } = require("../../utils/JWT/get.token.jwt");
 
 exports.resetPassword = catchAsyncError(
     async(req,res,next)=>{
         const {token} = req.params;
         const {newPassword} = req.body;
+        const accessToken = GetAccessToken();
 
         if(!token){
             return next(new ErrorHandler("Token is required",401));
@@ -31,9 +34,22 @@ exports.resetPassword = catchAsyncError(
         user.resetPasswordToken = undefined;
         user.resetPasswordExpiry = undefined;
 
-        user.refreshToken = null;
 
         await user.save();
+
+
+        // Blacklist the current token after password reset
+        if (accessToken) {
+            db.run(
+            `INSERT INTO tokens (token) VALUES (?)`,
+            [accessToken],
+            function (err) {
+                if (err) {
+                    console.error("Error blacklisting token:", err);
+                }
+            }
+            );
+        }
 
         res.status(200).json({
             message : 'Your Password Has been updated. Login again',

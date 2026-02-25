@@ -1,16 +1,15 @@
 const ActivityLogger = require("../../models/activity.logger.schema");
 const Document = require("../../models/document.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
+const { GetDocumentId } = require("../../utils/Documents/get.document.id");
 const ErrorHandler = require("../../utils/ErrorHandler");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 exports.deleteDocumentById = catchAsyncError(
     async(req,res,next)=>{
-        const {documentId} = req.params;
-        const userId = req.user._id;
+        const documentId = GetDocumentId(req);
+        const userId = GetUserId(req);
 
-        if(!documentId){
-            return next(new ErrorHandler("Please provide documentId",401));
-        }
 
         let document = await Document.findById(documentId);
 

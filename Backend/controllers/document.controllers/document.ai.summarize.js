@@ -2,16 +2,16 @@
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
 const Document = require("../../models/document.schema");
-const { generateUsingAI } = require("../../utils/gemini.ai");
+const { generateUsingAI } = require("../../utils/AI/gemini.ai");
+const { GetDocumentId } = require("../../utils/Documents/get.document.id");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 exports.generateSummaryOfDocument = catchAsyncError(
     async(req,res,next)=>{
-        const {documentId} = req.params;
-        const userId = req.user._id;
+        const documentId = GetDocumentId(req);
+        const userId = GetUserId(req);
 
-        if(!documentId){
-            return next(new ErrorHandler("Please Provide Document Id", 401));
-        }
+       
 
         const document = await Document.findOne({_id:documentId, userId, isDeleted:false});
 

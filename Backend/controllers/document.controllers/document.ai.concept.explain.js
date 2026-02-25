@@ -1,21 +1,20 @@
 const Document = require("../../models/document.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
+const { GetDocumentId } = require("../../utils/Documents/get.document.id");
 const ErrorHandler = require("../../utils/ErrorHandler");
-const explainUsingAI = require("../../utils/explainUsingAI");
-const { getContext } = require("../../utils/findContext");
-const { generateUsingAI } = require("../../utils/gemini.ai");
+const explainUsingAI = require("../../utils/AI/explainUsingAI");
+const { getContext } = require("../../utils/AI/findContext");
+const { generateUsingAI } = require("../../utils/AI/gemini.ai");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 // Future Scope : Instead of matching chunks, Store text embeddings along with chunks and match with prompt embedding using mongodb atlas vector search functionality for better chunks similarity and faster response
 
 exports.explainConceptUsingAI = catchAsyncError(
   async (req, res, next) => {
-    const { documentId } = req.params;
-    const userId = req.user._id;
     const { prompt } = req.body;
 
-    if (!documentId) {
-      return next(new ErrorHandler("Please Provide Document Id", 401));
-    }
+    const documentId = GetDocumentId(req);
+    const userId = GetUserId(req);
 
     const document = await Document.findOne({
       _id: documentId,

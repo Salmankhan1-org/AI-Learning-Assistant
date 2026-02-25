@@ -2,10 +2,11 @@ const User = require("../../models/userModel");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
 const jwt = require("jsonwebtoken");
+const { GetRefreshToken } = require("../../utils/JWT/get.jwt.refresh.token");
 
 exports.refreshToken = catchAsyncError(async (req, res, next) => {
-  //  Get refresh token from cookies
-  const refreshToken = req.cookies.refreshToken;
+  //  Get refresh token 
+  const refreshToken = GetRefreshToken();
 
   if (!refreshToken) {
     return next(new ErrorHandler("No refresh token found. Login again", 401));

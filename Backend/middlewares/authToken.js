@@ -3,42 +3,63 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const { catchAsyncError } = require("../utils/catchAsyncError");
 const redisClient = require("../config/redis");
 const User = require("../models/userModel");
+const db = require("../config/connectSqliteDb");
+const { GetAccessToken } = require("../utils/JWT/get.token.jwt");
+
+
 
 exports.isAuthenticated = catchAsyncError(
-    async (req, res, next) =>{
-    const token = req?.cookies?.accessToken;
+  async (req, res, next) => {
 
-    if(!token){
-        return next(new ErrorHandler("login to access this resource", 401));
+    const token = GetAccessToken();
+
+    if (!token) {
+      return next(new ErrorHandler("Login to access this resource", 401));
     }
 
-    const decodedData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-    if(!decodedData){
-        return next(new ErrorHandler("Invalid Token. Login again", 401));
-    }
+ 
+    db.get(
+      `SELECT token FROM tokens WHERE token = ?`,
+      [token],
+      async (err, row) => {
 
-    // check in the redis if user exist or not
-    const redisKey = `user:${decodedData.id}`
+        if (row) {
+          return next(new ErrorHandler("Token expired or revoked. Login again.", 401));
+        }
 
-    const cachedUser = await redisClient.get(redisKey);
+      
+        let decodedData;
+        try {
+          decodedData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+        } catch (error) {
+          return next(new ErrorHandler("Invalid Token. Login again", 401));
+        }
 
-    if(cachedUser){
-        req.user = JSON.parse(cachedUser);
-        return next();
-    }
+     
+        const redisKey = `user:${decodedData.id}`;
+        const cachedUser = await redisClient.get(redisKey);
 
-    const user = await User.findById(decodedData.id);
-    if(!user){
-        return next(new ErrorHandler("User not found",404));
-    }
+        if (cachedUser) {
+          req.user = JSON.parse(cachedUser);
+          return next();
+        }
 
-    await redisClient.set(redisKey,JSON.stringify(user),{EX:900});
+        
+        const user = await User.findById(decodedData.id);
 
-    req.user = user;
+        if (!user) {
+          return next(new ErrorHandler("User not found", 404));
+        }
 
-    next();
-}
-)
+        await redisClient.set(redisKey, JSON.stringify(user), { EX: 900 });
+
+        req.user = user;
+
+        next();
+      }
+    );
+  }
+);
 
 
 // Check if user is Admin or not

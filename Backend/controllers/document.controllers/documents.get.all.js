@@ -4,11 +4,13 @@ const Quiz = require("../../models/quiz.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
 const mongoose = require("mongoose");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 exports.getAllDocuments = catchAsyncError(async (req, res, next) => {
-  const userId = req.user?._id;
+  const userId = GetUserId(req);
 
  const userObjectId = new mongoose.Types.ObjectId(userId);
+
   if (!userId) {
     return next(new ErrorHandler("Login to Access", 401));
   }

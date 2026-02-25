@@ -3,9 +3,10 @@ const Document = require("../../models/document.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
 const ActivityLogger = require("../../models/activity.logger.schema");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 exports.uploadDocument = catchAsyncError(async (req, res, next) => {
-  const userId = req.user._id;
+  const userId = GetUserId(req);
   const { title } = req.body;
 
   if (!title || title.trim().length === 0) {

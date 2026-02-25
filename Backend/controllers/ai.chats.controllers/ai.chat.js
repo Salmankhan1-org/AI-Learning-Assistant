@@ -1,14 +1,17 @@
 const Chat = require("../../models/chat.schema");
 const Document = require("../../models/document.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
+const { GetDocumentId } = require("../../utils/Documents/get.document.id");
 const ErrorHandler = require("../../utils/ErrorHandler");
-const explainUsingAI = require("../../utils/explainUsingAI");
-const { getContext } = require("../../utils/findContext");
-const { generateUsingAI } = require("../../utils/gemini.ai");
+
+const { getContext } = require("../../utils/AI/findContext");
+const { generateUsingAI } = require("../../utils/AI/gemini.ai");
+const { GetUserId } = require("../../utils/Users/get.user.id");
+const explainUsingAI = require("../../utils/AI/explainUsingAI");
 
 exports.aiChat = catchAsyncError(async (req, res, next) => {
-  const { documentId } = req.params;
-  const userId = req.user._id;
+  const documentId = GetDocumentId(req);
+  const userId = GetUserId(req);
   const { prompt } = req.body;
 
 

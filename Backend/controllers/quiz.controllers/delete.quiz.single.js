@@ -2,11 +2,12 @@ const ActivityLogger = require("../../models/activity.logger.schema");
 const Quiz = require("../../models/quiz.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
 const ErrorHandler = require("../../utils/ErrorHandler");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 exports.deleteQuizUsingId = catchAsyncError(
     async(req,res,next)=>{
         const {quizId} = req.params;
-        const userId = req.user._id;
+        const userId = GetUserId(req);
 
         if(!quizId){
             return next(new ErrorHandler("Please provide quiz Id", 401));

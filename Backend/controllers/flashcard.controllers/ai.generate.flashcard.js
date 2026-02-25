@@ -2,13 +2,15 @@ const ActivityLogger = require("../../models/activity.logger.schema");
 const Document = require("../../models/document.schema");
 const FlashCard = require("../../models/flashcard.schema");
 const { catchAsyncError } = require("../../utils/catchAsyncError");
+const { GetDocumentId } = require("../../utils/Documents/get.document.id");
 const ErrorHandler = require("../../utils/ErrorHandler");
-const { generateUsingAI } = require("../../utils/gemini.ai");
+const { generateUsingAI } = require("../../utils/AI/gemini.ai");
+const { GetUserId } = require("../../utils/Users/get.user.id");
 
 exports.generateFlashcards = catchAsyncError(
     async(req,res,next)=>{
-        const {documentId} = req.params;
-        const userId = req.user._id;
+       const documentId = GetDocumentId(req);
+       const userId = GetUserId(req);
 
         if(!documentId){
             return next(new ErrorHandler("Document Id is required",401));
