@@ -8,7 +8,7 @@ exports.logout = catchAsyncError(
 
     const userId = req.user?._id;
 
-    const accessToken = GetAccessToken();
+    const accessToken = GetAccessToken(req);
 
     if (accessToken) {
       db.run(

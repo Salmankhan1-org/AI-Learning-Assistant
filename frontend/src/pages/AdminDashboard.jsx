@@ -28,6 +28,8 @@ import { FaBookOpen, FaUsers } from "react-icons/fa";
 import { MdOutlineQuiz } from "react-icons/md";
 import api from "../helper/axiosAPI";
 import Loader from "../components/Loader";
+import { toast } from 'react-toastify';
+
 
 const COLORS = {
   green: "#22c55e",
@@ -61,7 +63,7 @@ const AdminDashboard = () => {
       const { data } = await api.get("/users/admin/get/analytics");
       if (data?.success) setAnalytics(data.data);
     } catch (err) {
-      console.log(err?.response?.data?.message);
+      toast.error(err?.response?.data?.message || "Failed to fetch Analytics");
     } finally {
       setLoading(false);
     }

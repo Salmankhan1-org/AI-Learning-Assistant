@@ -33,8 +33,10 @@ exports.login = catchAsyncError(
         if(!user){
             return next(new ErrorHandler("Invalid email or password", 401));
         }
+        
         // Check if password is correct or not
         const isPasswordValid = await bcrypt.compare(password, user.password);
+
         if(!isPasswordValid){
             return next(new ErrorHandler("Invalid email or password",401));
         }

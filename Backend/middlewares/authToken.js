@@ -11,7 +11,7 @@ const { GetAccessToken } = require("../utils/JWT/get.token.jwt");
 exports.isAuthenticated = catchAsyncError(
   async (req, res, next) => {
 
-    const token = GetAccessToken();
+    const token = GetAccessToken(req);
 
     if (!token) {
       return next(new ErrorHandler("Login to access this resource", 401));

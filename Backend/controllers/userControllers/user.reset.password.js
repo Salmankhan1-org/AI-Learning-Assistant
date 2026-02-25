@@ -10,7 +10,7 @@ exports.resetPassword = catchAsyncError(
     async(req,res,next)=>{
         const {token} = req.params;
         const {newPassword} = req.body;
-        const accessToken = GetAccessToken();
+        const accessToken = GetAccessToken(req);
 
         if(!token){
             return next(new ErrorHandler("Token is required",401));

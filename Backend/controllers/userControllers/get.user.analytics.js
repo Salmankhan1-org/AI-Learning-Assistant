@@ -5,7 +5,9 @@ const { catchAsyncError } = require("../../utils/catchAsyncError");
 const mongoose = require("mongoose");
 const { GetUserId } = require("../../utils/Users/get.user.id");
 
-exports.getUserAnalytics = catchAsyncError(async (req, res) => {
+exports.getUserAnalytics = catchAsyncError(
+  async (req, res) => {
+
   const userId = new mongoose.Types.ObjectId(GetUserId(req));
 
   /* Quick Analysis Data counts */
